@@ -1,35 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise Audio</title>
+    <title>PRMC 맨몸운동 테스트 오디오 재생</title>
+    <meta name="description" content="PRMC 테스트를 위한 맨몸운동 오디오 재생 웹사이트. 턱걸이, 팔굽혀펴기, 윗몸일으키기 운동에 맞는 오디오를 들으며 PRMC 테스트 준비를 돕습니다.">
+    <meta name="keywords" content="PRMC 테스트, 맨몸운동, 턱걸이, 팔굽혀펴기, 윗몸일으키기, 오디오 재생, 운동 오디오">
 </head>
 <body>
-    <h1>Choose Your Exercise</h1>
-    <button onclick="playAudio('pullups')">Pull-ups</button>
-    <button onclick="playAudio('pushups')">Push-ups</button>
+    <h1>PRMC 테스트 오디오 재생</h1>
+    <p>이 웹사이트는 PRMC 테스트 준비를 위한 맨몸운동 오디오 재생 사이트입니다. <br> 사용자가 버튼을 눌러 각각의 운동에 맞는 오디오를 재생할 수 있어 운동에 집중하며 PRMC 테스트를 준비할 수 있습니다.</p>
+    
+    <button onclick="playAudio('situp')">윗몸일으키기</button>
+    <button onclick="playAudio('pullup')">턱걸이</button>
+    <button onclick="playAudio('pressup')">팔굽혀펴기</button>
 
-    <!-- Audio files (Replace 'pullups.mp3' and 'pushups.mp3' with your actual file paths) -->
-    <audio id="pullups-audio" src="pullups.mp3"></audio>
-    <audio id="pushups-audio" src="pushups.mp3"></audio>
+    <!-- 오디오 파일 (파일명이 정확히 일치해야 합니다) -->
+    <audio id="situp-audio" src="PRMC Sit Up Test Audio.mp3"></audio>
+    <audio id="pullup-audio" src="PRMC Pull up Test Audio.mp3"></audio>
+    <audio id="pressup-audio" src="PRMC Press Up Test Audio.mp3"></audio>
 
     <script>
-        function playAudio(exercise) {
-            const pullupsAudio = document.getElementById('pullups-audio');
-            const pushupsAudio = document.getElementById('pushups-audio');
+        function playAudio(test) {
+            // 모든 오디오 요소 가져오기
+            const situpAudio = document.getElementById('situp-audio');
+            const pullupAudio = document.getElementById('pullup-audio');
+            const pressupAudio = document.getElementById('pressup-audio');
 
-            // Stop any audio that's already playing
-            pullupsAudio.pause();
-            pushupsAudio.pause();
-            pullupsAudio.currentTime = 0;
-            pushupsAudio.currentTime = 0;
+            // 중첩 재생 방지를 위해 모든 오디오 일시 정지 및 재설정
+            situpAudio.pause();
+            pullupAudio.pause();
+            pressupAudio.pause();
+            situpAudio.currentTime = 0;
+            pullupAudio.currentTime = 0;
+            pressupAudio.currentTime = 0;
 
-            // Play selected audio
-            if (exercise === 'pullups') {
-                pullupsAudio.play();
-            } else if (exercise === 'pushups') {
-                pushupsAudio.play();
+            // 클릭한 버튼에 맞는 오디오 재생
+            if (test === 'situp') {
+                situpAudio.play();
+            } else if (test === 'pullup') {
+                pullupAudio.play();
+            } else if (test === 'pressup') {
+                pressupAudio.play();
             }
         }
     </script>
