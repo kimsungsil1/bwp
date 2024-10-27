@@ -16,9 +16,9 @@
     <button onclick="playAudio('pressup')">팔굽혀펴기</button>
 
     <!-- 오디오 파일 (파일명이 정확히 일치해야 합니다) -->
-    <audio id="situp-audio" src="PRMC Sit Up Test Audio.mp3"></audio>
-    <audio id="pullup-audio" src="PRMC Pull up Test Audio.mp3"></audio>
-    <audio id="pressup-audio" src="PRMC Press Up Test Audio.mp3"></audio>
+    <audio id="situp-audio" src="PRMC Sit Up Test Audio.mp3" preload="auto"></audio>
+    <audio id="pullup-audio" src="PRMC Pull up Test Audio.mp3" preload="auto"></audio>
+    <audio id="pressup-audio" src="PRMC Press Up Test Audio.mp3" preload="auto"></audio>
 
     <script>
         function playAudio(test) {
@@ -37,11 +37,11 @@
 
             // 클릭한 버튼에 맞는 오디오 재생
             if (test === 'situp') {
-                situpAudio.play();
+                situpAudio.play().catch(error => console.error("Audio playback failed:", error));
             } else if (test === 'pullup') {
-                pullupAudio.play();
+                pullupAudio.play().catch(error => console.error("Audio playback failed:", error));
             } else if (test === 'pressup') {
-                pressupAudio.play();
+                pressupAudio.play().catch(error => console.error("Audio playback failed:", error));
             }
         }
     </script>
