@@ -70,6 +70,27 @@
             transform: scale(0.98);
         }
 
+        table {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #2b6cb0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2b6cb0;
+            color: #fff;
+        }
+
         /* 반응형 디자인 */
         @media (max-width: 600px) {
             p {
@@ -100,6 +121,45 @@
     <audio id="situp-audio" src="PRMC Sit Up Test Audio.mp3" preload="auto"></audio>
     <audio id="pullup-audio" src="PRMC Pull up Test Audio.mp3" preload="auto"></audio>
     <audio id="pressup-audio" src="PRMC Press Up Test Audio.mp3" preload="auto"></audio>
+
+    <h2>PRMC 테스트 만점 기준 및 점수표</h2>
+    <p>아래는 PRMC 테스트에서 만점을 받기 위한 기준과 점수표입니다. 이 점수표를 참고하여 목표를 설정하고 훈련에 임하시기 바랍니다.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>운동 종류</th>
+                <th>만점 기준 (횟수/시간)</th>
+                <th>점수</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>윗몸일으키기</td>
+                <td>85회 (2분)</td>
+                <td>100점</td>
+            </tr>
+            <tr>
+                16회
+                <td>100점</td>
+            </tr>
+            <tr>
+                <td>팔굽혀펴기</td>
+                <td>60회 (2분)</td>
+                <td>100점</td>
+            </tr>
+            <tr>
+                <td>3마일 달리기</td>
+                <td>18분 이하</td>
+                <td>100점</td>
+            </tr>
+            <tr>
+                <td>멀티 스테이지 피트니스 테스트 (Bleep Test)</td>
+                <td>Level 13</td>
+                <td>100점</td>
+            </tr>
+        </tbody>
+    </table>
 
     <script>
         function playAudio(test) {
