@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRMC 맨몸운동 테스트 오디오 재생</title>
+    <title>PRMC 전문 운동 앱</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,9 +60,16 @@
             transform: scale(0.98);
         }
 
-        .counter {
+        .counter, .set-input-container {
             margin-top: 20px;
             font-size: 20px;
+        }
+
+        .set-input-container input {
+            padding: 10px;
+            font-size: 16px;
+            width: 50px;
+            text-align: center;
         }
 
         /* 반응형 디자인 */
@@ -79,20 +86,25 @@
     </style>
 </head>
 <body>
-    <h1>PRMC 테스트 오디오 재생</h1>
+    <h1>PRMC 전문 운동 앱</h1>
     <p>
-        PRMC(Pre-Royal Marines Course)는 영국 왕립 해병대에 입대하려는 지원자들을 위한 체력 및 정신력 평가 테스트입니다. 이 테스트는 엄격한 체력 기준을 요구하며, 신체적 및 정신적 강인함을 측정하기 위해 다양한 맨몸운동을 포함합니다.
+        PRMC(Pre-Royal Marines Course)는 영국 왕립 해병대에 입대하려는 지원자들을 위한 체력 및 정신력 평가 테스트입니다. 이 앱은 사용자가 운동 세트 수와 횟수를 설정하고 효과적으로 관리할 수 있게 돕습니다.
     </p>
 
-    <div class="button-container">
-        <button onclick="startExercise('situp')">윗몸일으키기 시작</button>
-        <button onclick="startExercise('pullup')">턱걸이 시작</button>
-        <button onclick="startExercise('pressup')">팔굽혀펴기 시작</button>
+    <div class="set-input-container">
+        <label>세트 수: <input type="number" id="set-count" value="3" min="1"></label>
+        <label>반복 횟수: <input type="number" id="rep-count" value="10" min="1"></label>
     </div>
 
-    <!-- 카운터와 타이머 표시 -->
+    <div class="button-container">
+        <button onclick="startExercise()">운동 시작</button>
+        <button onclick="endExercise()">운동 종료</button>
+    </div>
+
+    <!-- 현재 진행 상태 표시 -->
     <div class="counter">
-        <p>운동 횟수: <span id="exercise-count">0</span></p>
+        <p>현재 세트: <span id="current-set">0</span></p>
+        <p>현재 반복 횟수: <span id="current-rep">0</span></p>
         <p>타이머: <span id="exercise-timer">00:00</span></p>
     </div>
 
@@ -103,25 +115,26 @@
     </div>
 
     <!-- 오디오 파일 (파일명이 정확히 일치해야 합니다) -->
-    <audio id="situp-audio" src="PRMC Sit Up Test Audio.mp3" preload="auto"></audio>
-    <audio id="pullup-audio" src="PRMC Pull up Test Audio.mp3" preload="auto"></audio>
-    <audio id="pressup-audio" src="PRMC Press Up Test Audio.mp3" preload="auto"></audio>
+    <audio id="workout-audio" src="PRMC Sit Up Test Audio.mp3" preload="auto"></audio>
 
     <script>
-        let exerciseCount = 0;
-        let exerciseInterval;
-        let exerciseStartTime;
+        let setCount, repCount, currentSet = 0, currentRep = 0, exerciseInterval, exerciseStartTime;
 
-        // 타이머 초기화 및 시작 함수
-        function startExercise(type) {
-            exerciseCount = 0;
-            document.getElementById('exercise-count').innerText = exerciseCount;
+        function startExercise() {
+            // 세트와 반복 횟수 초기화
+            setCount = parseInt(document.getElementById('set-count').value);
+            repCount = parseInt(document.getElementById('rep-count').value);
+            currentSet = 1;
+            currentRep = 0;
+            document.getElementById('current-set').innerText = currentSet;
+            document.getElementById('current-rep').innerText = currentRep;
+
+            // 타이머 시작
             startTimer();
-            playAudio(type);
             exerciseStartTime = new Date();
+            playAudio();
         }
 
-        // 타이머 시작
         function startTimer() {
             let seconds = 0;
             clearInterval(exerciseInterval);
@@ -131,74 +144,63 @@
             }, 1000);
         }
 
-        // 시간을 00:00 형식으로 변환
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
             const secs = (seconds % 60).toString().padStart(2, '0');
             return `${mins}:${secs}`;
         }
 
-        // 오디오 재생 함수
-        function playAudio(test) {
-            const situpAudio = document.getElementById('situp-audio');
-            const pullupAudio = document.getElementById('pullup-audio');
-            const pressupAudio = document.getElementById('pressup-audio');
+        function playAudio() {
+            const workoutAudio = document.getElementById('workout-audio');
+            workoutAudio.play().catch(error => console.error("Audio playback failed:", error));
+        }
 
-            situpAudio.pause();
-            pullupAudio.pause();
-            pressupAudio.pause();
-            situpAudio.currentTime = 0;
-            pullupAudio.currentTime = 0;
-            pressupAudio.currentTime = 0;
-
-            if (test === 'situp') {
-                situpAudio.play().catch(error => console.error("Audio playback failed:", error));
-            } else if (test === 'pullup') {
-                pullupAudio.play().catch(error => console.error("Audio playback failed:", error));
-            } else if (test === 'pressup') {
-                pressupAudio.play().catch(error => console.error("Audio playback failed:", error));
+        function incrementRep() {
+            if (currentRep < repCount) {
+                currentRep++;
+                document.getElementById('current-rep').innerText = currentRep;
+            } else {
+                currentSet++;
+                if (currentSet > setCount) {
+                    endExercise();
+                } else {
+                    currentRep = 1;
+                    document.getElementById('current-set').innerText = currentSet;
+                    document.getElementById('current-rep').innerText = currentRep;
+                }
             }
         }
 
-        // 카운터 증가 함수
-        function incrementCount() {
-            exerciseCount++;
-            document.getElementById('exercise-count').innerText = exerciseCount;
-        }
-
-        // 세트가 끝났을 때 사용자에게 피드백 및 기록 저장
         function endExercise() {
             clearInterval(exerciseInterval);
             const duration = Math.floor((new Date() - exerciseStartTime) / 1000);
-            saveRecord(duration, exerciseCount);
-            alert(`운동 완료! 총 ${exerciseCount}회를 수행했고, ${formatTime(duration)} 동안 운동했습니다.`);
+            saveRecord(duration, setCount, repCount);
+            alert(`운동 완료! 총 ${setCount}세트, 세트당 ${repCount}회를 수행했고, ${formatTime(duration)} 동안 운동했습니다.`);
             displayRecords();
         }
 
-        // 기록 저장 함수
-        function saveRecord(duration, count) {
+        function saveRecord(duration, sets, reps) {
             const records = JSON.parse(localStorage.getItem('exerciseRecords')) || [];
             records.push({
                 date: new Date().toLocaleString(),
-                count,
+                sets,
+                reps,
                 duration: formatTime(duration)
             });
             localStorage.setItem('exerciseRecords', JSON.stringify(records));
         }
 
-        // 기록 표시 함수
         function displayRecords() {
             const records = JSON.parse(localStorage.getItem('exerciseRecords')) || [];
             const recordList = document.getElementById('record-list');
             recordList.innerHTML = '';
             records.forEach(record => {
                 const li = document.createElement('li');
-                li.textContent = `날짜: ${record.date}, 횟수: ${record.count}, 시간: ${record.duration}`;
+                li.textContent = `날짜: ${record.date}, 세트 수: ${record.sets}, 반복 횟수: ${record.reps}, 시간: ${record.duration}`;
                 recordList.appendChild(li);
             });
         }
 
-        // 페이지 로드시 기록 표시
         window.onload = displayRecords;
     </script>
 </body>
