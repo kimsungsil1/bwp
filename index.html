@@ -3,7 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRMC 전문 운동 앱</title>
+    <title>PRMC 전문 운동 앱 - 맨몸운동, 체력 강화, 해병대 준비</title>
+    <meta name="description" content="PRMC(Pre-Royal Marines Course) 전문 운동 앱입니다. 맨몸운동, 체력 강화, 턱걸이, 팔굽혀펴기 등 체력 평가와 목표 설정을 통해 당신의 체력 수준을 높여보세요.">
+    <meta name="keywords" content="PRMC, 운동 앱, 맨몸운동, 체력 강화, 해병대 훈련, 턱걸이, 팔굽혀펴기, 운동 기록, 체력 테스트">
+    <link rel="manifest" href="manifest.json">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PRMC 전문 운동 앱",
+        "description": "PRMC(Pre-Royal Marines Course) 전문 운동 앱입니다. 맨몸운동, 체력 강화, 턱걸이, 팔굽혀펴기 등 체력 평가와 목표 설정을 통해 체력 수준을 향상시킬 수 있습니다.",
+        "url": "https://yourwebsite.com",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "All",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+        }
+    }
+    </script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -86,33 +107,36 @@
     </style>
 </head>
 <body>
-    <h1>PRMC 전문 운동 앱</h1>
-    <p>
-        PRMC(Pre-Royal Marines Course)는 영국 왕립 해병대에 입대하려는 지원자들을 위한 체력 및 정신력 평가 테스트입니다. 이 앱은 사용자가 운동 세트 수와 횟수를 설정하고 효과적으로 관리할 수 있게 돕습니다.
-    </p>
+    <header>
+        <h1>PRMC 전문 운동 앱</h1>
+        <p>
+            PRMC(Pre-Royal Marines Course)는 영국 왕립 해병대에 입대하려는 지원자들을 위한 체력 및 정신력 평가 테스트입니다. 이 앱은 사용자가 운동 세트 수와 횟수를 설정하고 효과적으로 관리할 수 있게 돕습니다.
+        </p>
+    </header>
 
-    <div class="set-input-container">
+    <section class="set-input-container">
+        <h2>운동 계획 설정</h2>
         <label>세트 수: <input type="number" id="set-count" value="3" min="1"></label>
         <label>반복 횟수: <input type="number" id="rep-count" value="10" min="1"></label>
-    </div>
+    </section>
 
-    <div class="button-container">
+    <section class="button-container">
+        <h2>운동 시작</h2>
         <button onclick="startExercise()">운동 시작</button>
         <button onclick="endExercise()">운동 종료</button>
-    </div>
+    </section>
 
-    <!-- 현재 진행 상태 표시 -->
-    <div class="counter">
+    <section class="counter">
+        <h2>운동 진행 상황</h2>
         <p>현재 세트: <span id="current-set">0</span></p>
         <p>현재 반복 횟수: <span id="current-rep">0</span></p>
         <p>타이머: <span id="exercise-timer">00:00</span></p>
-    </div>
+    </section>
 
-    <!-- 이전 기록 표시 -->
-    <div id="record">
+    <section id="record">
         <h2>이전 운동 기록</h2>
         <ul id="record-list"></ul>
-    </div>
+    </section>
 
     <!-- 오디오 파일 (파일명이 정확히 일치해야 합니다) -->
     <audio id="workout-audio" src="PRMC Sit Up Test Audio.mp3" preload="auto"></audio>
